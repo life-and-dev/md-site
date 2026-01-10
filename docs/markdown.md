@@ -82,6 +82,16 @@ A Table of Contents is automatically generated for every page based on the `h2` 
 
 Code blocks support syntax highlighting and are rendered in a monospaced font with a subtle background.
 
+````md
+```typescript
+// Example code block
+const message = "Hello from Nuxt Content!"
+console.log(message)
+```
+````
+
+This will render as:
+
 ```typescript
 // Example code block
 const message = "Hello from Nuxt Content!"
@@ -105,3 +115,18 @@ Will be rendered as:
 | Plain text       | Line breaks                | List                                                                  |
 | ---------------- | -------------------------- | --------------------------------------------------------------------- |
 | Blah, blah, blah | Line 1<br/>Line2<br/>Line3 | <ul><li>List item 1</li><li>List item 2</li><li>List item 3</li></ul> |
+
+## 7. Images
+
+Images are supported using standard Markdown syntax. You can reference local images by their relative path.
+
+For example, to include the project logo:
+
+```md
+![MD-Site Logo](./logo.svg)
+```
+
+Will be rendered as:
+
+![MD-Site Logo](./logo.svg)
+
