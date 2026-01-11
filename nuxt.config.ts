@@ -148,6 +148,12 @@ export default defineNuxtConfig({
 
     // Generate navigation, search index, and favicons before build
     'build:before': async () => {
+
+      // Skip during 'nuxt prepare' or if no configuration is provided
+      if (process.argv.includes('prepare') || !process.env.CMS_CONFIG) {
+        return
+      }
+
       const domain: string = process.env.CONTENT || ''
 
       // Generate navigation and search JSON files

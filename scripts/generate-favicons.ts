@@ -188,8 +188,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     try {
       const yaml = await import('yaml')
       const config = yaml.default.parse(fs.readFileSync(domainConfigPath, 'utf8'))
-      if (config.contentPath && !contentPath) {
-        contentPath = path.resolve(projectRoot, config.contentPath)
+      if (config.content?.path && !contentPath) {
+        contentPath = path.resolve(projectRoot, config.content.path)
       }
     } catch (e) {
       console.warn(`⚠️ Could not parse config at ${domainConfigPath}, using defaults.`)
