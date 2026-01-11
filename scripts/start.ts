@@ -71,7 +71,10 @@ const gitTargetDir = gitConfig.path
     ? path.resolve(rootDir, gitConfig.path)
     : contentPath
 
-if (gitConfig.repo && (isBuild || isGenerate)) {
+const isContentMissing = !fs.existsSync(gitTargetDir);
+const isEnvironmentManaged = !!process.env.CONTENT_DIR; // Use local path if provided via environment
+
+if (gitConfig.repo && (isBuild || isGenerate || (isContentMissing && !isEnvironmentManaged))) {
     const repoUrl = gitConfig.repo
     const branch = gitConfig.branch || 'main'
 

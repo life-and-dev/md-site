@@ -71,9 +71,11 @@ When Cloudflare runs `npm run generate`:
 2.  The `start.ts` script checks for a domain argument or the `CONTENT` environment variable.
 3.  If no domain is found, it loads the default `content.config.yml` configuration.
 4.  If `content.git.repo` is specified in the config, it automatically checks out (clones or pulls) that repository:
+    - **In all modes**: It automatically clones the repo if the destination is missing.
+    - **In Build/Generate modes**: It also pulls the latest changes if the repo already exists.
     - Target directory: `content.git.path` (defaults to `content.path`).
     - Branch: `content.git.branch` (defaults to `main`).
-    - If the git operation fails, the deployment aborts with an error.
+    - If the git operation fails, the operation aborts with an error.
 5.  It resolves the content source directory:
     - Path: `content.path` (defaults to `../{domain}` relative to project root, where domain is the config name or `cms`).
 6.  It syncs your images and assets into the `public/` folder.
