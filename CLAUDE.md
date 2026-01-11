@@ -65,7 +65,7 @@ Configuration files specify:
 - `themes`: Light and dark theme color tokens (Vuetify theme system)
 - `githubRepo` and `githubBranch`: For "Edit on GitHub" links
 
-The `scripts/start.ts` file orchestrates configuration loading and passes settings via environment variables (`CONTENT`, `CONTENT_DIR`, `CMS_CONFIG`).
+The `scripts/start.ts` file orchestrates configuration loading and passes settings via environment variables (`CONTENT`, `CONTENT_DIR`, `CONTENT_CONFIG`).
 
 ## Content Processing Pipeline
 

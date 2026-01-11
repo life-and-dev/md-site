@@ -7,7 +7,7 @@ interface SiteConfig {
 }
 
 /**
- * Get site configuration based on runtime config (populated from CMS_CONFIG)
+ * Get site configuration based on runtime config (populated from CONTENT_CONFIG)
  */
 export function useSiteConfig(): SiteConfig {
   const config = useRuntimeConfig()

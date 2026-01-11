@@ -56,14 +56,23 @@ const domainConfig = domainConfigPath
 // Combine configs (domain overrides global)
 const config = { ...globalConfig, ...domainConfig }
 
-// Fallback to 'cms' if no domain is provided and not in config
-const activeDomain = domain || config.domain || 'cms'
+// Fallback to 'content' if no domain is provided and not in config
+const activeDomain = domain || config.domain || 'content'
 
 // Resolve content path
 const contentConfig = config.content || {}
 const contentPath = contentConfig.path
     ? path.resolve(rootDir, contentConfig.path)
     : path.resolve(rootDir, '..', activeDomain)
+
+// Set environment variables EARLY
+process.env.CONTENT = activeDomain
+process.env.CONTENT_DIR = contentPath
+process.env.CONTENT_CONFIG = JSON.stringify(config)
+
+console.log(`🚀 Preparing site for domain: ${activeDomain} (${domain ? 'custom' : 'default'})`)
+console.log(`📂 Content path: ${contentPath}`)
+console.log(`📑 Config file: ${domainConfigPath || globalConfigPath}`)
 
 // Git checkout logic
 const gitConfig = contentConfig.git || {}
@@ -99,14 +108,6 @@ if (gitConfig.repo && (isBuild || isGenerate || (isContentMissing && !isEnvironm
         process.exit(1)
     }
 }
-
-console.log(`🚀 Preparing site for: ${domain || 'Default (content.config.yml)'}`)
-console.log(`📂 Content path: ${contentPath}`)
-
-// Set environment variables for the child process
-process.env.CONTENT = activeDomain
-process.env.CONTENT_DIR = contentPath
-process.env.CMS_CONFIG = JSON.stringify(config)
 
 // Determine the command to run
 let nuxtCommand = 'dev'

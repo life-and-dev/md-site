@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     public: {
       contentDomain: process.env.CONTENT,
       // Pass the full site configuration to the client
-      siteConfig: process.env.CMS_CONFIG ? JSON.parse(process.env.CMS_CONFIG) : {}
+      siteConfig: process.env.CONTENT_CONFIG ? JSON.parse(process.env.CONTENT_CONFIG) : {}
     }
   },
 
@@ -62,7 +62,7 @@ export default defineNuxtConfig({
   hooks: {
     // Wrap Bible verses in spans BEFORE markdown is parsed to AST
     // This prevents hydration mismatch by ensuring server and client HTML match
-    'content:file:beforeParse': (ctx) => {
+    'content:file:beforeParse': (ctx: { file: any }) => {
       const { file } = ctx
       if (!file.id.endsWith('.md')) return
 
@@ -86,7 +86,7 @@ export default defineNuxtConfig({
 
       // Process GFM Alerts (> [!NOTE])
       const alertPattern = /^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*(?:\n>.*)*)/gm
-      file.body = file.body.replace(alertPattern, (match, type, content, offset) => {
+      file.body = file.body.replace(alertPattern, (match: any, type: string, content: string, offset: number) => {
         if (isInExcludedContext(file.body, offset)) return match
 
         const cleanContent = content.split('\n')
@@ -97,14 +97,14 @@ export default defineNuxtConfig({
 
       // Check if Bible tooltips feature is enabled in CMS config
       let enableBibleTooltips = false
-      if (process.env.CMS_CONFIG) {
+      if (process.env.CONTENT_CONFIG) {
         try {
-          const config = JSON.parse(process.env.CMS_CONFIG)
+          const config = JSON.parse(process.env.CONTENT_CONFIG)
           if (config.features && typeof config.features.bibleTooltips === 'boolean') {
             enableBibleTooltips = config.features.bibleTooltips
           }
         } catch (e) {
-          console.warn('Failed to parse CMS_CONFIG for feature check', e)
+          console.warn('Failed to parse CONTENT_CONFIG for feature check', e)
         }
       }
 
@@ -139,7 +139,7 @@ export default defineNuxtConfig({
       })
     },
 
-    'ready': async (nuxt) => {
+    'ready': async (nuxt: { options: { dev: any } }) => {
       if (nuxt.options.dev) {
         const { startWatcher } = await import('./scripts/sync-content')
         await startWatcher()
@@ -150,7 +150,7 @@ export default defineNuxtConfig({
     'build:before': async () => {
 
       // Skip during 'nuxt prepare' or if no configuration is provided
-      if (process.argv.includes('prepare') || !process.env.CMS_CONFIG) {
+      if (process.argv.includes('prepare') || !process.env.CONTENT_CONFIG) {
         return
       }
 
@@ -167,14 +167,14 @@ export default defineNuxtConfig({
 
       // Extract site name from configuration
       let name = domain
-      if (process.env.CMS_CONFIG) {
+      if (process.env.CONTENT_CONFIG) {
         try {
-          const config = JSON.parse(process.env.CMS_CONFIG)
+          const config = JSON.parse(process.env.CONTENT_CONFIG)
           if (config.siteName) {
             name = config.siteName
           }
         } catch (e) {
-          console.warn('Failed to parse CMS_CONFIG for site name', e)
+          console.warn('Failed to parse CONTENT_CONFIG for site name', e)
         }
       }
 

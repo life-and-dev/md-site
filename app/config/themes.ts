@@ -26,15 +26,15 @@ export function getDomainThemes(domain: string | undefined): Record<string, Them
     }
   }
 
-  // 2. Try to load from CMS_CONFIG environment variable (injected by start script)
-  if (process.env.CMS_CONFIG) {
+  // 2. Try to load from CONTENT_CONFIG environment variable (injected by start script)
+  if (process.env.CONTENT_CONFIG) {
     try {
-      const config = JSON.parse(process.env.CMS_CONFIG)
+      const config = JSON.parse(process.env.CONTENT_CONFIG)
       if (config.themes) {
         themes = config.themes
       }
     } catch (e) {
-      console.warn('Failed to parse CMS_CONFIG environment variable', e)
+      console.warn('Failed to parse CONTENT_CONFIG environment variable', e)
     }
   }
 

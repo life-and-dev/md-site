@@ -41,10 +41,10 @@ This is the most critical part. Your application is "content-agnostic" until you
 
 Go to **Settings > Environment variables** in Cloudflare and add:
 
-| Variable     | Example Value | Description                                                                         |
-| :----------- | :------------ | :---------------------------------------------------------------------------------- |
-| `CONTENT`    | `example`     | (Optional) The name of the configuration. If omitted, it uses `content.config.yml`. |
-| `CMS_CONFIG` | (Optional)    | JSON string of configuration if you need to override defaults without a file.       |
+| Variable         | Example Value | Description                                                                         |
+| :--------------- | :------------ | :---------------------------------------------------------------------------------- |
+| `CONTENT`        | `example`     | (Optional) The name of the configuration. If omitted, it uses `content.config.yml`. |
+| `CONTENT_CONFIG` | (Optional)    | JSON string of configuration if you need to override defaults without a file.       |
 
 > [!TIP]
 > If you only host **one site**, you don't need to specify a domain. Just create a `content.config.yml` in the root and run commands without arguments.
