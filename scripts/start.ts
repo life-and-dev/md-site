@@ -56,14 +56,18 @@ const domainConfig = domainConfigPath
 // Combine configs (domain overrides global)
 const config = { ...globalConfig, ...domainConfig }
 
-// Fallback to 'content' if no domain is provided and not in config
-const activeDomain = domain || config.domain || 'content'
+// Resolve active domain
+const activeDomain = domain || config.domain || ''
 
 // Resolve content path
-const contentConfig = config.content || {}
-const contentPath = contentConfig.path
-    ? path.resolve(rootDir, contentConfig.path)
-    : path.resolve(rootDir, '..', activeDomain)
+// Check domain config first, then fall back to global config, then use defaults
+const domainContentPath = domainConfig.content?.path
+const globalContentPath = globalConfig.content?.path
+const contentPath = domainContentPath
+    ? path.resolve(rootDir, domainContentPath)
+    : (activeDomain === ''
+        ? (globalContentPath ? path.resolve(rootDir, globalContentPath) : path.resolve(rootDir, 'docs'))
+        : path.resolve(rootDir, '..', activeDomain))
 
 // Set environment variables EARLY
 process.env.CONTENT = activeDomain
@@ -75,7 +79,7 @@ console.log(`📂 Content path: ${contentPath}`)
 console.log(`📑 Config file: ${domainConfigPath || globalConfigPath}`)
 
 // Git checkout logic
-const gitConfig = contentConfig.git || {}
+const gitConfig = config.content?.git || {}
 const gitTargetDir = gitConfig.path
     ? path.resolve(rootDir, gitConfig.path)
     : contentPath
