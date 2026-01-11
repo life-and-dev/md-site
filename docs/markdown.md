@@ -130,3 +130,27 @@ Will be rendered as:
 
 ![MD-Site Logo](./logo.svg)
 
+## 8. Mermaid Diagrams
+
+You can create diagrams using [Mermaid syntax](https://mermaid.js.org/ecosystem/tutorials.html):
+
+````md
+```mermaid
+graph TD;
+    A[Start] --> B{Is it working?};
+    B -- Yes --> C[Great!];
+    B -- No --> D[Check logs];
+```
+````
+
+Will be rendered as:
+
+```mermaid
+graph TD;
+    A[Start] --> B{Is it working?};
+    B -- Yes --> C[Great!];
+    B -- No --> D[Check logs];
+```
+
+This will be rendered as a beautiful interactive diagram.
+

@@ -19,7 +19,7 @@ This allows multiple websites (domains) to share the exact same code. We can fix
 When you run `npm start` or `npm run generate`, the following pipeline executes:
 
 ```mermaid
-graph LR
+graph TB
     A[Markdown Content] -->|sync-content.ts| B[Public Folder]
     A -->|generate-indices.ts| C[JSON Indices]
     B --> D[Nuxt App]
