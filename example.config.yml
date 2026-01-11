@@ -1,4 +1,9 @@
-contentPath: './docs'
+content:
+  path: ../example/docs # Path where md files are located
+  git:
+    repo: https://github.com/life-and-dev/md-site # If missing, assume content is part of this git repo
+    branch: main
+    path: ../example # Path where git content is cloned/checked out
 features:
   bibleTooltips: true
 siteName: 'Example Site'
@@ -57,5 +62,3 @@ themes:
       on-success: '#ffffff'
       outline: '#303030'
       outline-bars: '#161616'
-githubRepo: 'life-and-dev/md-cms'
-githubBranch: 'main'

@@ -41,11 +41,10 @@ This is the most critical part. Your application is "content-agnostic" until you
 
 Go to **Settings > Environment variables** in Cloudflare and add:
 
-| Variable      | Example Value | Description                                                                         |
-| :------------ | :------------ | :---------------------------------------------------------------------------------- |
-| `CONTENT`     | `example`     | (Optional) The name of the configuration. If omitted, it uses `content.config.yml`. |
-| `CONTENT_DIR` | (Optional)    | If your content is NOT in `../md-content`, set the absolute path here.              |
-| `CMS_CONFIG`  | (Optional)    | JSON string of configuration if you need to override defaults without a file.       |
+| Variable     | Example Value | Description                                                                         |
+| :----------- | :------------ | :---------------------------------------------------------------------------------- |
+| `CONTENT`    | `example`     | (Optional) The name of the configuration. If omitted, it uses `content.config.yml`. |
+| `CMS_CONFIG` | (Optional)    | JSON string of configuration if you need to override defaults without a file.       |
 
 > [!TIP]
 > If you only host **one site**, you don't need to specify a domain. Just create a `content.config.yml` in the root and run commands without arguments.
@@ -70,12 +69,13 @@ npm run build
 When Cloudflare runs `npm run generate`:
 1.  It installs dependencies.
 2.  The `start.ts` script checks for a domain argument or the `CONTENT` environment variable.
-3.  If no domain is found, it loads the default `content.config.yml` configuration (or fallbacks to `docs/` if not present).
-4.  It syncs your images and assets into the `public/` folder.
-5.  It generates the static JSON indices (`_navigation.json`, `_search-index.json`).
-6.  Nuxt crawls all your pages and generates static HTML in `.output/public`.
-
----
-
-> [!TIP]
-> **Output**: After a few minutes, Cloudflare will provide you with a URL (e.g., `https://kingdom.pages.dev`). Your site is now live!
+3.  If no domain is found, it loads the default `content.config.yml` configuration.
+4.  If `content.git.repo` is specified in the config, it automatically checks out (clones or pulls) that repository:
+    - Target directory: `content.git.path` (defaults to `content.path`).
+    - Branch: `content.git.branch` (defaults to `main`).
+    - If the git operation fails, the deployment aborts with an error.
+5.  It resolves the content source directory:
+    - Path: `content.path` (defaults to `../{domain}` relative to project root, where domain is the config name or `cms`).
+6.  It syncs your images and assets into the `public/` folder.
+7.  It generates the static JSON indices (`_navigation.json`, `_search-index.json`).
+8.  Nuxt crawls all your pages and generates static HTML in `.output/public`.

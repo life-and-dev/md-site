@@ -60,11 +60,44 @@ const config = { ...globalConfig, ...domainConfig }
 const activeDomain = domain || config.domain || 'cms'
 
 // Resolve content path
-const contentPath = config.contentPath
-    ? path.resolve(rootDir, config.contentPath)
-    : path.resolve(rootDir, 'docs') // Default to local docs if no path provided
+const contentConfig = config.content || {}
+const contentPath = contentConfig.path
+    ? path.resolve(rootDir, contentConfig.path)
+    : path.resolve(rootDir, '..', activeDomain)
 
-console.log(`🚀 Preparing CMS for: ${domain || 'Default (content.config.yml)'}`)
+// Git checkout logic
+const gitConfig = contentConfig.git || {}
+const gitTargetDir = gitConfig.path
+    ? path.resolve(rootDir, gitConfig.path)
+    : contentPath
+
+if (gitConfig.repo && (isBuild || isGenerate)) {
+    const repoUrl = gitConfig.repo
+    const branch = gitConfig.branch || 'main'
+
+    console.log(`📡 Checking out content repo: ${repoUrl} (${branch}) into ${gitTargetDir}`)
+
+    let exitCode = 0
+    if (fs.existsSync(path.join(gitTargetDir, '.git'))) {
+        console.log(`🔄 Updating existing content repo...`)
+        const pullProcess = spawn('git', ['-C', gitTargetDir, 'pull', 'origin', branch], { stdio: 'inherit' })
+        exitCode = await new Promise((resolve) => pullProcess.on('close', resolve)) || 0
+    } else if (!fs.existsSync(gitTargetDir)) {
+        console.log(`📥 Cloning content repo...`)
+        const cloneProcess = spawn('git', ['clone', '-b', branch, repoUrl, gitTargetDir], { stdio: 'inherit' })
+        exitCode = await new Promise((resolve) => cloneProcess.on('close', resolve)) || 0
+    } else {
+        console.error(`❌ Destination directory ${gitTargetDir} exists but is not a Git repo. Aborting.`)
+        process.exit(1)
+    }
+
+    if (exitCode !== 0) {
+        console.error(`❌ Git operation failed with exit code ${exitCode}. Aborting.`)
+        process.exit(1)
+    }
+}
+
+console.log(`🚀 Preparing site for: ${domain || 'Default (content.config.yml)'}`)
 console.log(`📂 Content path: ${contentPath}`)
 
 // Set environment variables for the child process
