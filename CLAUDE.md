@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+<!-- Last updated: 2026-01-11 -->
+
 ## Project Overview
 
 MD-Site is a file-based Markdown Static Site Generator (SSG) with strict separation between content (Markdown files) and renderer (Nuxt framework). Multiple websites can share the same codebase by pointing to different content directories through configuration files.
