@@ -37,9 +37,35 @@
     line-height: 1.5;
   }
 
-  /* Force all text to pure black */
-  * {
+  /* Force standard text to pure black, but allow code colors */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  blockquote,
+  dt,
+  dd,
+  th,
+  td {
     color: black !important;
+  }
+
+  /* Code blocks: allow syntax highlighting */
+  pre {
+    background-color: white !important;
+    border: 1px solid #ccc;
+    color: initial;
+    /* Allow inheritance or syntax highlighting */
+  }
+
+  /* Ensure code content is visible */
+  code {
+    background-color: transparent !important;
+    color: inherit;
   }
 
   /* Render links as plain text */
