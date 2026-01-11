@@ -6,6 +6,8 @@ Welcome to the MD Site! This project is designed to be a flexible, file-based Ma
 
 Our goal is to allow content creators to write simple Markdown files while this project provide a robust, high-performance rendering engine that can be deployed anywhere (like Cloudflare Pages).
 
+A preview of MD Site's output is available at [https://life-and-dev.github.io/md-site](https://life-and-dev.github.io/md-site).
+
 ## Getting Started
 
 ### 0. Prerequisites
@@ -94,3 +96,7 @@ We have prepared a series of tutorials to guide you through every aspect of work
 
 - **[Deployment](deploy)**  
   Ready to go live? This guide explains how to deploy your content to production using Cloudflare Pages.
+
+## Contribute
+
+Contribute to the source code at [https://github.com/life-and-dev/md-site](https://github.com/life-and-dev/md-site).

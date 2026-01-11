@@ -6,8 +6,8 @@ export interface BreadcrumbItem {
 /**
  * Extract fallback title from path
  */
-function getFallbackTitle(pagePath: string): string {
-  if (pagePath === '/') return 'Root'
+function getFallbackTitle(pagePath: string, siteName?: string): string {
+  if (pagePath === '/') return siteName || 'Root'
   return pagePath.split('/').filter(Boolean).pop() || 'Page'
 }
 
@@ -18,6 +18,7 @@ function getFallbackTitle(pagePath: string): string {
  */
 export async function generateBreadcrumbs(path: string): Promise<BreadcrumbItem[]> {
   const segments = path.split('/').filter(Boolean)
+  const { siteName } = useSiteConfig()
 
   // Build full path array for querying (includes root)
   const paths: string[] = ['/']
@@ -31,9 +32,9 @@ export async function generateBreadcrumbs(path: string): Promise<BreadcrumbItem[
   for (const pagePath of paths) {
     try {
       const page = await queryCollection('content').path(pagePath).first()
-      pageTitles.set(pagePath, page?.title || getFallbackTitle(pagePath))
+      pageTitles.set(pagePath, page?.title || getFallbackTitle(pagePath, siteName))
     } catch {
-      pageTitles.set(pagePath, getFallbackTitle(pagePath))
+      pageTitles.set(pagePath, getFallbackTitle(pagePath, siteName))
     }
   }
 
@@ -44,7 +45,7 @@ export async function generateBreadcrumbs(path: string): Promise<BreadcrumbItem[
     // Show root + all segments
     for (const currentPath of paths) {
       breadcrumbs.push({
-        title: pageTitles.get(currentPath) || getFallbackTitle(currentPath),
+        title: pageTitles.get(currentPath) || getFallbackTitle(currentPath, siteName),
         path: currentPath
       })
     }

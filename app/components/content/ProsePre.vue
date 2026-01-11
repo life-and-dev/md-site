@@ -30,17 +30,19 @@ const props = defineProps({
 
 <style scoped>
 pre {
+  border-radius: 1rem;
   position: relative;
   padding: 1rem;
-  border-radius: 8px;
   overflow-x: auto;
-  background-color: #bbb;
+  background-color: #ddd;
   border: 2px solid rgb(var(--v-theme-outline));
+  border-radius: 1rem !important;
 }
 
 @media print {
   pre {
     background-color: white !important;
+    border-radius: 1rem !important;
     border: 2px solid #ccc !important;
   }
 }

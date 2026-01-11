@@ -1,7 +1,7 @@
 contentPath: './docs'
 features:
   bibleTooltips: true
-siteName: 'Markdown CMS Documentation'
+siteName: 'MD Site'
 themes:
   light:
     colors:

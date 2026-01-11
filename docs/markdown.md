@@ -68,11 +68,13 @@ For example:
 
 ```md
 > This is a blockquote. It will appear inside a styled card with a left border matching your primary/secondary theme color.
+>> This is a nested blockquote.
 ```
 
 Will be rendered as:
 
 > This is a blockquote. It will appear inside a styled card with a left border matching your primary/secondary theme color.
+>> This is a nested blockquote.
 
 ## 4. Tables of Contents
 
