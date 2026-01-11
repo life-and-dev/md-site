@@ -78,8 +78,13 @@ watch(() => route.path, () => {
   loadBreadcrumbs()
 }, { immediate: true })
 
-const handlePrint = () => {
+const triggerPrint = inject('triggerPrint', () => {
+  // Fallback if not provided
   window.print()
+})
+
+const handlePrint = () => {
+  triggerPrint()
 }
 </script>
 

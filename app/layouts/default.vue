@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div class="layout-wrapper">
     <!-- App Bar -->
     <AppBar
       :sidebars-visible="mdAndUp && sidebarsVisible"
@@ -12,7 +12,7 @@
         <!-- Left Sidebar (Navigation) -->
         <v-navigation-drawer
           v-model="sidebarsVisible"
-          permanent
+          :permanent="!isPrinting"
           absolute
           location="left"
           width="320"
@@ -29,7 +29,7 @@
 
         <!-- Center Content Column (flexible) -->
         <v-main class="content-area">
-          <v-container>
+          <v-container :fluid="isPrinting" :class="{ 'print-force-full': isPrinting }">
             <div ref="desktopContentContainer">
               <slot />
             </div>
@@ -40,7 +40,7 @@
         <v-navigation-drawer
           v-if="shouldShowTOC"
           v-model="sidebarsVisible"
-          permanent
+          :permanent="!isPrinting"
           absolute
           location="right"
           width="320"
@@ -113,7 +113,7 @@
 
     <!-- Footer Bar (always visible on all layouts) -->
     <AppFooter />
-  </v-app>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -144,6 +144,69 @@ watch(mdAndUp, (newValue) => {
   sidebarsVisible.value = newValue
   if (!newValue) {
     drawerOpen.value = false
+  }
+})
+
+// Print handling - close sidebars to allow content to expand natively
+// Print handling
+const isPrinting = ref(false)
+let previousSidebarState = true
+
+const handlePrint = async () => {
+  previousSidebarState = sidebarsVisible.value
+  
+  // 1. Enter print mode
+  isPrinting.value = true
+  sidebarsVisible.value = false
+  
+  // 2. Wait for Vue to update the DOM (including style recalculations)
+  await nextTick()
+  // Small delay to ensure layout shifts have completed visually for the browser's print capture
+  // 500ms to accommodate the 0.3s sidebar transition
+  await new Promise(resolve => setTimeout(resolve, 500))
+
+  // 3. Print
+  window.print()
+
+  // 4. Cleanup after print dialog closes
+  isPrinting.value = false
+  sidebarsVisible.value = previousSidebarState
+}
+
+// Provide to children (like AppBar)
+provide('triggerPrint', handlePrint)
+
+// Also listen for Ctrl+P (native browser print)
+// Note: This might still have a race condition on some browsers since we can't "pause" the event.
+// The button click approach (triggerPrint) is preferred.
+const onBeforePrint = () => {
+  if (!isPrinting.value) { // Only run if not already triggered by our helper
+    previousSidebarState = sidebarsVisible.value
+    isPrinting.value = true
+    sidebarsVisible.value = false
+  }
+}
+
+const onAfterPrint = () => {
+  // Only restore if we weren't triggered by the helper (which handles its own restore)
+  // Or just safe to always restore if we are in print mode
+  if (isPrinting.value) {
+    isPrinting.value = false
+    sidebarsVisible.value = previousSidebarState
+  }
+}
+
+onMounted(() => {
+  if (import.meta.client) {
+    window.addEventListener('beforeprint', onBeforePrint)
+    window.addEventListener('afterprint', onAfterPrint)
+  }
+})
+
+onUnmounted(() => {
+  if (import.meta.client) {
+    window.removeEventListener('beforeprint', onBeforePrint)
+    window.removeEventListener('afterprint', onAfterPrint)
   }
 })
 
@@ -201,15 +264,40 @@ body {
 }
 
 /* Print styles - hide navigation elements */
+/* Print styles - hide navigation elements */
 @media print {
-  .v-navigation-drawer {
+  .v-navigation-drawer,
+  .v-app-bar,
+  .v-footer {
     display: none !important;
   }
 
+  /* Reset layout constraints - Force block to kill flexbox gaps */
+  .desktop-layout,
+  .v-application,
+  .v-main,
   .content-area {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    max-width: 100% !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* Force reset Vuetify layout variables to ensure no space is reserved */
+    --v-layout-left: 0px !important;
+    --v-layout-right: 0px !important;
+    --v-layout-top: 0px !important;
+    --v-layout-bottom: 0px !important;
+  }
+
+  /* Ensure container takes full width - High Specificity to override scoped styles */
+  .v-application .v-container,
+  .v-container.print-force-full,
+  .v-container {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 16px !important;
+    margin: 0 !important;
+    flex: 0 0 100% !important;
   }
 }
 </style>
@@ -279,8 +367,10 @@ body {
   font-size: 0.875rem;
 }
 
-/* Ensure proper spacing for container */
-:deep(.v-container) {
-  max-width: 1200px;
+/* Ensure proper spacing for container - Screen only */
+@media screen {
+  :deep(.v-container) {
+    max-width: 1200px;
+  }
 }
 </style>

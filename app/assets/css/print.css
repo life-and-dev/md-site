@@ -1,5 +1,6 @@
 /* Print-friendly styles */
 @media print {
+
   /* Hide navigation elements */
   .v-app-bar,
   .v-navigation-drawer,
@@ -12,8 +13,9 @@
 
   /* Remove margins and padding for navigation rail */
   .v-main {
-    margin-left: 0 !important;
-    padding-left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
   }
 
   /* Reset layout for printing */
@@ -23,7 +25,7 @@
 
   /* Ensure content takes full width */
   .v-container {
-    max-width: 100% !important;
+    max-width: none !important;
     padding: 0 !important;
   }
 
@@ -31,7 +33,7 @@
   body {
     color: black !important;
     background: white !important;
-    font-size: 12pt;
+    font-size: 10pt;
     line-height: 1.5;
   }
 
@@ -51,14 +53,21 @@
     content: "" !important;
   }
 
-  /* Ensure images fit on page */
+  /* Ensure images fit on page, but can take full width */
   img {
     max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
     page-break-inside: avoid;
   }
 
   /* Avoid breaking inside elements */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     page-break-after: avoid;
     page-break-inside: avoid;
   }
