@@ -33,12 +33,15 @@ pre {
   position: relative;
   padding: 1rem;
   border-radius: 8px;
-  background-color: #f8f9fa;
   overflow-x: auto;
+  background-color: #bbb;
+  border: 2px solid rgb(var(--v-theme-outline));
 }
 
-/* Dark mode support if applicable */
-:deep(.dark-mode) pre {
-  background-color: #1e1e1e;
+@media print {
+  pre {
+    background-color: white !important;
+    border: 2px solid #ccc !important;
+  }
 }
 </style>

@@ -65,18 +65,18 @@ watch(() => props.code, () => {
   justify-content: center;
   margin: 1.5rem 0;
   padding: 1rem;
-  background: var(--v-theme-surface);
+  background-color: rgb(var(--v-theme-surface));
   border-radius: 12px;
   overflow-x: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.05);
 }
 
 .mermaid-loading {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--v-theme-on-surface-variant);
+  color: rgb(var(--v-theme-on-surface-variant));
   font-style: italic;
 }
 
@@ -89,5 +89,15 @@ watch(() => props.code, () => {
   color: var(--v-theme-error);
   padding: 1rem;
   font-family: monospace;
+}
+
+@media print {
+  .mermaid-container {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    margin: 1rem 0 !important;
+    padding: 0 !important;
+  }
 }
 </style>

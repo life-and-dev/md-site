@@ -18,6 +18,7 @@
     "@nuxt/content": "^3.8.0",
     "@types/node": "^24.10.0",
     "better-sqlite3": "^12.4.1",
+    "fs-extra": "^11.3.2",
     "gray-matter": "^4.0.3",
     "mermaid": "^11.12.2",
     "nuxt": "^4.2.1",
