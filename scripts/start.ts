@@ -85,9 +85,11 @@ const gitTargetDir = gitConfig.path
     : contentPath
 
 const isContentMissing = !fs.existsSync(gitTargetDir);
-const isEnvironmentManaged = !!process.env.CONTENT_DIR; // Use local path if provided via environment
 
-if (gitConfig.repo && (isBuild || isGenerate || (isContentMissing && !isEnvironmentManaged))) {
+// Perform git clone/pull when:
+// - Building for production (--build or --generate): always ensure content is up-to-date
+// - Dev mode: only if content directory doesn't exist (skip if exists for faster startup)
+if (gitConfig.repo && (isBuild || isGenerate || isContentMissing)) {
     const repoUrl = gitConfig.repo
     const branch = gitConfig.branch || 'main'
 
