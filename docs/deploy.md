@@ -74,8 +74,3 @@ When Cloudflare runs `npm run generate`:
 4.  It syncs your images and assets into the `public/` folder.
 5.  It generates the static JSON indices (`_navigation.json`, `_search-index.json`).
 6.  Nuxt crawls all your pages and generates static HTML in `.output/public`.
-
----
-
-> [!TIP]
-> **Output**: After a few minutes, Cloudflare will provide you with a URL (e.g., `https://kingdom.pages.dev`). Your site is now live!

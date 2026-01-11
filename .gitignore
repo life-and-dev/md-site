@@ -6,6 +6,12 @@
 .cache
 dist
 
+# CLI build output
+/cli/dist/
+
+# CLI temporary config
+/.cli-temp-content.config.yml
+
 # Node dependencies
 node_modules
 

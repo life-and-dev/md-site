@@ -2,7 +2,36 @@
   "name": "md-site",
   "version": "0.1.0",
   "type": "module",
-  "private": true,
+  "private": false,
+  "description": "File-based Markdown Static Site Generator built with Nuxt",
+  "keywords": [
+    "markdown",
+    "static-site-generator",
+    "ssg",
+    "nuxt",
+    "documentation",
+    "cms"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/life-and-dev/md-site.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bin": {
+    "md-site": "cli/bin/md-site.js"
+  },
+  "files": [
+    "cli/bin/",
+    "cli/dist/",
+    "app/",
+    "scripts/",
+    "nuxt.config.ts",
+    "tsconfig.json",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsx scripts/start.ts --build",
     "dev": "rm -rf .data && tsx scripts/start.ts",
@@ -12,12 +41,16 @@
     "postinstall": "nuxt prepare",
     "favicon": "tsx scripts/generate-favicons.ts",
     "start": "tsx scripts/start.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "build:cli": "cd cli && tsc",
+    "prepublishOnly": "npm run build:cli"
   },
   "dependencies": {
     "@nuxt/content": "^3.8.0",
     "@types/node": "^24.10.0",
     "better-sqlite3": "^12.4.1",
+    "chokidar": "^4.0.3",
+    "commander": "^12.0.0",
     "fs-extra": "^11.3.2",
     "gray-matter": "^4.0.3",
     "mermaid": "^11.12.2",
