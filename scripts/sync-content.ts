@@ -135,10 +135,6 @@ export async function copyAllImages() {
         const files = await getAllFiles(sourceDir, ext)
 
         for (const sourcePath of files) {
-            // Skip logo.svg - it's used for favicon generation
-            if (path.basename(sourcePath) === LOGO_FILE) {
-                continue
-            }
 
             // Skip files in favicon directory - handled separately
             if (sourcePath.includes(`${path.sep}${FAVICON_DIR}${path.sep}`)) {
