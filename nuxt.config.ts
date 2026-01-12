@@ -76,6 +76,12 @@ export default defineNuxtConfig({
         const codeBlockCount = (before.match(/```/g) || []).length
         if (codeBlockCount % 2 === 1) return true
 
+        // Check for inline code blocks - count backticks in the current line
+        const lastNewline = before.lastIndexOf('\n')
+        const currentLine = lastNewline === -1 ? before : before.substring(lastNewline + 1)
+        const backtickCount = (currentLine.match(/`/g) || []).length
+        if (backtickCount % 2 === 1) return true
+
         // Check for links - rough check for [text](url) format
         const lastOpenBracket = before.lastIndexOf('[')
         const lastCloseBracket = before.lastIndexOf(']')

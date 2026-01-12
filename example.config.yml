@@ -6,7 +6,9 @@ content:
     path: ../example # Path where git content is cloned/checked out
 features:
   bibleTooltips: true
-siteName: 'Example Site'
+  sourceEdit: false
+site:
+  name: 'Example Site'
 themes:
   light:
     colors:

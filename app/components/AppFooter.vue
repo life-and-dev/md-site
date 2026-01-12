@@ -27,9 +27,10 @@
           Disclaimer
         </v-btn>
 
-        <v-divider vertical class="mx-2" />
+        <v-divider v-if="editUrl" vertical class="mx-2" />
 
         <v-btn
+          v-if="editUrl"
           :href="editUrl"
           variant="text"
           color="on-surface-appbar"
@@ -45,7 +46,9 @@
 </template>
 
 <script setup lang="ts">
-const { getEditUrl } = useGitHubEdit()
+import { useSourceEdit } from '~/composables/useSourceEdit';
+
+const { getEditUrl } = useSourceEdit()
 
 // Generate links to root content files
 const aboutLink = computed(() => '/about')

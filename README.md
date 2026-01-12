@@ -26,6 +26,18 @@ This project allow content creators to write standard Markdown files while MD-Si
 - 🧪 **[Automated Testing](docs/tests.md)**: Comprehensive E2E test suite using Playwright.
 - 🚀 **[Deployment](docs/deploy.md)**: Optimized deployment to static hosting platforms like Cloudflare Pages.
 
+## Feature Toggles
+
+MD-Site allows you to enable or disable specific features globally via your configuration file (e.g., `content.config.yml`). This is done in the `features` section:
+
+```yaml
+features:
+  bibleTooltips: true  # Automatic Bible reference detection
+  sourceEdit: true     # "Edit on GitHub" links
+```
+
+Check the **[Features Documentation](docs/features.md)** for a full list of available toggles and their effects.
+
 ## Getting Started
 
 The most common way to start the project is using the `npm start` command.

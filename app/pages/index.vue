@@ -24,21 +24,31 @@ const { data: page, pending } = await useAsyncData(
   { server: true } // true = SSR/prerender only
 )
 
-// SEO meta tags
 const siteConfig = useSiteConfig()
+const title = page.value?.title || 'Home'
+const description = page.value?.description || ''
+
 useHead(() => ({
-  title: page.value?.title || 'Home',
+  title,
   htmlAttrs: { lang: 'en' },
   meta: [
-    { name: 'description', content: page.value?.description || '' },
+    { name: 'description', content: description },
     { name: 'keywords', content: page.value?.keywords?.join(', ') || '' },
-    { name: 'robots', content: 'index, follow' }
+    { name: 'robots', content: 'index, follow' },
+    { name: 'theme-color', content: siteConfig.themeColorLight, media: '(prefers-color-scheme: light)' },
+    { name: 'theme-color', content: siteConfig.themeColorDark, media: '(prefers-color-scheme: dark)' },
+    // Open Graph
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:url', content: siteConfig.siteCanonical },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: '/icon-512.png' }
   ],
   link: [
-    { rel: 'canonical', href: siteConfig.canonicalBase }
+    ...(siteConfig.siteCanonical ? [{ rel: 'canonical', href: siteConfig.siteCanonical }] : [])
   ]
 }))
 
-// Post-process content: Bible tooltips + TOC generation
+// Post-process content: like Bible tooltips + TOC generation
 useContentPostProcessing(page)
 </script>

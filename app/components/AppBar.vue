@@ -32,7 +32,7 @@
       </template>
     </v-tooltip>
 
-    <v-tooltip text="Edit on GitHub" location="bottom">
+    <v-tooltip v-if="editUrl" text="Edit on GitHub" location="bottom">
       <template v-slot:activator="{ props }">
         <v-btn
           v-bind="props"
@@ -50,6 +50,7 @@
 <script setup lang="ts">
 import { generateBreadcrumbs } from '~/composables/useBreadcrumbs'
 import type { BreadcrumbItem } from '~/composables/useBreadcrumbs'
+import { useSourceEdit } from '~/composables/useSourceEdit';
 
 const props = defineProps<{
   sidebarsVisible?: boolean
@@ -61,7 +62,7 @@ const emit = defineEmits<{
 
 const route = useRoute()
 const { toggleTheme } = useAppTheme()
-const { getEditUrl } = useGitHubEdit()
+const { getEditUrl } = useSourceEdit()
 
 // Generate breadcrumbs for current route
 const breadcrumbs = ref<BreadcrumbItem[]>([])

@@ -48,7 +48,7 @@ This command does several things behind the scenes:
 > [!NOTE]
 > The `/docs` directory contains this documentation as sample content to get you started. You can create your own content at any other location and configure it independantly.
 
-#### Multiple domains
+#### Multiple Domains
 
 If you want to start the project with a different configuration file, you can specify the domain as a parameter:
 
@@ -73,10 +73,10 @@ If you don't provide a `contentPath`, the system defaults to assuming your conte
 
 We have prepared a series of tutorials to guide you through every aspect of working with this project.
 
-- **[Markdown Reference](markdown)**
+- **[Markdown Reference](markdown)**  
   Learn about the supported GFM alerts, Bible references, and custom markdown rendering.
 
-- **[Menu Configuration](menu)**
+- **[Menu Configuration](menu)**  
   Learn the syntax of the `_menu.yml` file. We cover everything from simple links to dropdowns, external URLs, and separators.
 
 - **[Generating Favicons](favicon)**  
@@ -84,6 +84,9 @@ We have prepared a series of tutorials to guide you through every aspect of work
 
 - **[Theme Configuration](theme)**  
   Learn how to customize the look and feel of your site with custom color tokens and automatic dark mode support.
+
+- **[Features](features)**  
+  Learn how to toggle and configure site features like Bible tooltips and source editing.
 
 - **[Nuxt Configuration](nuxt)**  
   Dive into the `nuxt.config.ts` file. We explain the modules we use, the custom hooks we've written, and the difference between standard development and the low-level scripts.

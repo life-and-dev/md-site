@@ -40,27 +40,7 @@ These are rendered with distinct colors and icons (Info, Check, Primary, Warning
 > [!CAUTION]
 > Negative potential consequences of an action.
 
-## 2. Bible References
-
-Any text matching common Bible reference patterns is automatically wrapped in a special span.
-
-For example:
-
-```md
-This is an example that mention John 3:16 and Genesis 1:1-5.
-```
-
-Will be rendered as:
-
-> This is an example that mention John 3:16 and Genesis 1:1-5.
-
-> [!NOTE]
-> You can hover or click on the bible references to see the verse content.
-
-- **Visuals**: These references are highlighted with a distinct color.
-- **Interactivity**: Hovering over a reference (if enabled) will display a tooltip with the verse content.
-
-## 3. Blockquotes
+## 2. Blockquotes
 
 Standard markdown blockquotes are rendered as beautiful Material Design Cards:
 
@@ -76,11 +56,11 @@ Will be rendered as:
 > This is a blockquote. It will appear inside a styled card with a left border matching your primary/secondary theme color.
 >> This is a nested blockquote.
 
-## 4. Tables of Contents
+## 3. Tables of Contents
 
 A Table of Contents is automatically generated for every page based on the `h2` and `h3` headings. You don't need to add anything to your markdown files to enable this.
 
-## 5. Code Blocks
+## 4. Code Blocks
 
 Code blocks support syntax highlighting and are rendered in a monospaced font with a subtle background.
 
@@ -100,7 +80,7 @@ const message = "Hello from Nuxt Content!"
 console.log(message)
 ```
 
-## 6. Tables with lists
+## 5. Tables with lists
 
 Tables with lists are supported and will be rendered as beautiful Material Design Tables:
 
@@ -118,7 +98,7 @@ Will be rendered as:
 | ---------------- | -------------------------- | --------------------------------------------------------------------- |
 | Blah, blah, blah | Line 1<br/>Line2<br/>Line3 | <ul><li>List item 1</li><li>List item 2</li><li>List item 3</li></ul> |
 
-## 7. Images
+## 6. Images
 
 Images are supported using standard Markdown syntax. You can reference local images by their relative path.
 
@@ -132,7 +112,7 @@ Will be rendered as:
 
 ![MD-Site Logo](./logo.svg)
 
-## 8. Mermaid Diagrams
+## 7. Mermaid Diagrams
 
 You can create diagrams using [Mermaid syntax](https://mermaid.js.org/ecosystem/tutorials.html):
 

@@ -2,7 +2,10 @@ content:
   path: docs # relative to project root
 features:
   bibleTooltips: true
-siteName: 'MD Site'
+  sourceEdit: true
+site:
+  canonical: 'https://github.com/life-and-dev/md-site'
+  name: 'MD Site'
 themes:
   light:
     colors:

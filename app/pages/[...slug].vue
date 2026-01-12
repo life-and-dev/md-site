@@ -26,19 +26,28 @@ const { data: page, pending } = await useAsyncData(
   { server: true }
 )
 
-// SEO meta tags
-// @nuxt/content v3 automatically extracts title from first H1
 const siteConfig = useSiteConfig()
+const title = page.value?.title || 'Page'
+const description = page.value?.description || ''
+
 useHead(() => ({
-  title: page.value?.title || 'Page',
+  title,
   htmlAttrs: { lang: 'en' },
   meta: [
-    { name: 'description', content: page.value?.description || '' },
+    { name: 'description', content: description },
     { name: 'keywords', content: page.value?.keywords?.join(', ') || '' },
-    { name: 'robots', content: 'index, follow' }
+    { name: 'robots', content: 'index, follow' },
+    { name: 'theme-color', content: siteConfig.themeColorLight, media: '(prefers-color-scheme: light)' },
+    { name: 'theme-color', content: siteConfig.themeColorDark, media: '(prefers-color-scheme: dark)' },
+    // Open Graph
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:url', content: `${siteConfig.siteCanonical}${route.path}` },
+    { property: 'og:type', content: 'article' },
+    { property: 'og:image', content: '/icon-512.png' }
   ],
   link: [
-    { rel: 'canonical', href: `${siteConfig.canonicalBase}${route.path}` }
+    ...(siteConfig.siteCanonical ? [{ rel: 'canonical', href: `${siteConfig.siteCanonical}${route.path}` }] : [])
   ]
 }))
 

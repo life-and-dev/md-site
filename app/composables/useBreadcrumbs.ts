@@ -7,7 +7,7 @@ export interface BreadcrumbItem {
  * Extract fallback title from path
  */
 function getFallbackTitle(pagePath: string, siteName?: string): string {
-  if (pagePath === '/') return siteName || 'Root'
+  if (pagePath === '/') return siteName || 'Home'
   return pagePath.split('/').filter(Boolean).pop() || 'Page'
 }
 

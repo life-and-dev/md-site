@@ -1,9 +1,14 @@
 interface SiteConfig {
-  domain: string
   siteName: string
-  canonicalBase: string
-  githubRepo: string
-  githubBranch: string
+  siteCanonical: string
+  contentGitRepo: string
+  contentGitBranch: string
+  features: {
+    bibleTooltips: boolean
+    sourceEdit: boolean
+  }
+  themeColorLight: string
+  themeColorDark: string
 }
 
 /**
@@ -11,13 +16,18 @@ interface SiteConfig {
  */
 export function useSiteConfig(): SiteConfig {
   const config = useRuntimeConfig()
-  const siteConfig = config.public.siteConfig as unknown as SiteConfig
+  const siteConfig = config.public.siteConfig as any
 
   return {
-    domain: siteConfig?.domain || 'localhost',
-    siteName: siteConfig?.siteName || 'Markdown CMS',
-    canonicalBase: siteConfig?.canonicalBase || '',
-    githubRepo: siteConfig?.githubRepo || '',
-    githubBranch: siteConfig?.githubBranch || 'main'
+    siteName: siteConfig?.site?.name || '',
+    siteCanonical: siteConfig?.site?.canonical || '',
+    contentGitRepo: siteConfig?.content?.git?.repo || '',
+    contentGitBranch: siteConfig?.content?.git?.branch || 'main',
+    features: {
+      bibleTooltips: siteConfig?.features?.bibleTooltips ?? false,
+      sourceEdit: siteConfig?.features?.sourceEdit ?? false
+    },
+    themeColorLight: siteConfig?.themes?.light?.colors?.primary || '#000000',
+    themeColorDark: siteConfig?.themes?.dark?.colors?.primary || '#ffffff'
   }
 }
