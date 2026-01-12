@@ -4,7 +4,7 @@
 
 MD-Site is designed to be a flexible, file-based Markdown Static Site Generator (SSG) where content MD (Markdown) files are completely separated from the renderer (the Nuxt framework).
 
-This project allow content creators to write standard Markdown files while MD-Site provide a robust, high-performance rendering engine that can be deployed in any environment that support static webpages (like Cloudflare Pages).
+This project allow content creators to write standard Markdown files while MD-Site provide a robust, high-performance rendering engine that can be deployed in any environment that support static webpages (like Cloudflare or GitHub Pages).
 
 ## Benefits
 
@@ -20,23 +20,12 @@ This project allow content creators to write standard Markdown files while MD-Si
 - 🛠️ **[Menu Configuration](docs/menu.md)**: Support for flexible navigation structures including nested dropdowns and external links.
 - 🎨 **[Theme Configuration](docs/theme.md)**: Customizable look and feel with color tokens and automatic dark mode support.
 - 🖼️ **[Generating Favicons](docs/favicon.md)**: Automated generation of all browser and mobile favicons from a single SVG logo.
-- 🏗️ **[Project Architecture](docs/architecture.md)**: Decoupled design separating content from the rendering engine for maximum flexibility.
 - 🔍 **[Search & Indexing](docs/architecture.md)**: Pre-calculated JSON indices for lightning-fast client-side search.
-- 📖 **[Bible Verse Tooltips](docs/nuxt.md)**: Automatic detection and enhancement of scripture references with interactive tooltips.
+- 📖 **[Bible Verse Tooltips](docs/features/bible-tooltips.md)**: Automatic detection and enhancement of scripture references with interactive tooltips.
+- 📝 **[Source Edit](docs/features/source-edit.md)**: Add "Edit on GitHub" links to your content.
+- 🏗️ **[Project Architecture](docs/architecture.md)**: Decoupled design separating content from the rendering engine for maximum flexibility.
 - 🧪 **[Automated Testing](docs/tests.md)**: Comprehensive E2E test suite using Playwright.
 - 🚀 **[Deployment](docs/deploy.md)**: Optimized deployment to static hosting platforms like Cloudflare Pages.
-
-## Feature Toggles
-
-MD-Site allows you to enable or disable specific features globally via your configuration file (e.g., `content.config.yml`). This is done in the `features` section:
-
-```yaml
-features:
-  bibleTooltips: true  # Automatic Bible reference detection
-  sourceEdit: true     # "Edit on GitHub" links
-```
-
-Check the **[Features Documentation](docs/features.md)** for a full list of available toggles and their effects.
 
 ## Getting Started
 
@@ -58,6 +47,6 @@ npm run generate
 
 This will generate static HTML files in the `.output/public` directory.
 
----
+## Demo & Documentation
 
-For more detailed installation and setup instructions, please refer to the [Documentation](docs/index.md).
+For a demonstration or more detailed installation and setup instructions, please refer to the [MD Site Documentation](https://life-and-dev.github.io/md-site/) is hosted using this same project.

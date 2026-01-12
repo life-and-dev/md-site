@@ -1,13 +1,14 @@
 content:
-  path: ../example/docs # Path where md files are located
   git:
-    repo: https://github.com/life-and-dev/md-site # If missing, assume content is part of this git repo
     branch: main
-    path: ../example # Path where git content is cloned/checked out
+    path: ../example # Path where git content is cloned/checked out relative to this file
+    repo: https://github.com/life-and-dev/md-site # If missing, assume content is part of this git repo
+  path: ../example/docs # Path where md files are located relative to this file
 features:
   bibleTooltips: true
   sourceEdit: false
 site:
+  canonical: 'https://life-and-dev.github.io/md-site'
   name: 'Example Site'
 themes:
   light:

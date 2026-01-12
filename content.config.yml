@@ -1,10 +1,13 @@
 content:
-  path: docs # relative to project root
+  git:
+    path: . # Path where git content is cloned/checked out relative to this file
+    repo: https://github.com/life-and-dev/md-site # If missing, assume content is part of this git repo
+  path: docs # relative to this file
 features:
   bibleTooltips: true
   sourceEdit: true
 site:
-  canonical: 'https://github.com/life-and-dev/md-site'
+  canonical: 'https://life-and-dev.github.io/md-site'
   name: 'MD Site'
 themes:
   light:

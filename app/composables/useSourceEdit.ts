@@ -1,9 +1,25 @@
+import { relative, normalize, posix } from 'pathe'
+
 /**
  * Generate source edit URL for the current page
  */
 export function useSourceEdit() {
     const route = useRoute()
     const siteConfig = useSiteConfig()
+
+    /**
+     * Calculate the subdirectory within the git repo where content is located
+     */
+    function getContentSubdirectory(): string {
+        const gitPath = normalize(siteConfig.contentGitPath)
+        const contentPath = normalize(siteConfig.contentPath)
+
+        // Calculate relative path from git root to content directory
+        const subdir = relative(gitPath, contentPath)
+
+        // Convert to posix path for GitHub URLs (forward slashes)
+        return subdir ? posix.normalize(subdir) : ''
+    }
 
     /**
      * Generate source edit URL for current route
@@ -23,19 +39,28 @@ export function useSourceEdit() {
             return undefined
         }
 
-        // Convert repo URL to repo path (e.g., https://github.com/user/repo → user/repo)
-        const repoPath = repo.replace('https://github.com/', '')
+        var contentPath: string;
 
-        // Skip non-content routes
+        // Home page path
         if (!path || path === '/') {
-            // Root page maps to index.md in the content submodule repo
-            return `https://github.com/${repoPath}/blob/${siteConfig.contentGitBranch}/index.md`
+            contentPath = 'index'
         }
 
         // Convert route path to content file path
-        // Example: /church/history/constantine → church/history/constantine.md (in the submodule repo)
-        const contentPath = path.startsWith('/') ? path.slice(1) : path
-        return `https://github.com/${repoPath}/blob/${siteConfig.contentGitBranch}/${contentPath}.md`
+        // Example: /church/evolution/312-constantine → https://github.com/life-and-dev/church/blob/main/evolution/312-constantine.md
+        else {
+            contentPath = path.startsWith('/') ? path.slice(1) : path
+        }
+
+        // Get the subdirectory within the git repo
+        const subdir = getContentSubdirectory()
+
+        // Build the full path: subdirectory + content file path
+        const fullPath = subdir
+            ? `${subdir}/${contentPath}.md`
+            : `${contentPath}.md`
+
+        return `${repo}/blob/${siteConfig.contentGitBranch}/${fullPath}`
     }
 
     return {

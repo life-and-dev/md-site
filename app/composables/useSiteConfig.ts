@@ -3,6 +3,8 @@ interface SiteConfig {
   siteCanonical: string
   contentGitRepo: string
   contentGitBranch: string
+  contentGitPath: string
+  contentPath: string
   features: {
     bibleTooltips: boolean
     sourceEdit: boolean
@@ -23,6 +25,8 @@ export function useSiteConfig(): SiteConfig {
     siteCanonical: siteConfig?.site?.canonical || '',
     contentGitRepo: siteConfig?.content?.git?.repo || '',
     contentGitBranch: siteConfig?.content?.git?.branch || 'main',
+    contentGitPath: siteConfig?.content?.git?.path || '.',
+    contentPath: siteConfig?.content?.path || siteConfig?.content?.git?.path || '.',
     features: {
       bibleTooltips: siteConfig?.features?.bibleTooltips ?? false,
       sourceEdit: siteConfig?.features?.sourceEdit ?? false
