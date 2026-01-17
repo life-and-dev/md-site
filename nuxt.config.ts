@@ -176,8 +176,8 @@ export default defineNuxtConfig({
       if (process.env.CONTENT_CONFIG) {
         try {
           const config = JSON.parse(process.env.CONTENT_CONFIG)
-          if (config.siteName) {
-            name = config.siteName
+          if (config.site?.name) {
+            name = config.site.name
           }
         } catch (e) {
           console.warn('Failed to parse CONTENT_CONFIG for site name', e)

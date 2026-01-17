@@ -205,8 +205,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     try {
       const yaml = await import('yaml')
       const config = yaml.default.parse(fs.readFileSync(domainConfigPath, 'utf8'))
-      if (config.siteName) {
-        name = config.siteName
+      if (config.site?.name) {
+        name = config.site.name
       }
     } catch (e) {
       // Ignore
